@@ -58,7 +58,7 @@
         .action-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 12px 35px; border-radius: 20px; font-weight: bold; display: block; margin: 20px auto; cursor: pointer; transition: 0.2s; font-size: 16px; }
         .action-btn:active { transform: scale(0.95); background: rgba(255,255,255,0.3); }
 
-        /* مشغل الموسيقى الاحترافي */
+        /* مشغل الموسيقى */
         .music-player { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(50, 4, 12, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 30px; padding: 15px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 100; display: none; flex-direction: column; gap: 10px; }
         .player-top { display: flex; justify-content: space-between; align-items: center; }
         .eq-section { display: flex; align-items: center; gap: 8px; font-size: 12px; opacity: 0.8; }
@@ -104,7 +104,7 @@
         <h2 class="section-title">بدايتنا 💖</h2>
         
         <div class="glass-box" style="text-align: center; margin-bottom: 25px;">
-            <div style="font-weight: bold; margin-bottom: 10px;">✨ سوا من 03-10-2024 ✨</div>
+            <div style="font-weight: bold; margin-bottom: 10px;">✨ سوا من 04-09-2025 ✨</div>
             <div class="counter-grid">
                 <div class="counter-item"><span id="secs">0</span><label>ثانية</label></div>
                 <div class="counter-item"><span id="mins">0</span><label>دقيقة</label></div>
@@ -118,7 +118,7 @@
                 يوم ما قولتلك بحبك ❤️
             </div>
             <br>
-            <div class="date-badge" id="page-date">2024-10-03 📅</div>
+            <div class="date-badge" id="page-date">2025-09-04 📅</div>
 
             <div class="img-card">
                 <img id="page-img" src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/refs/heads/main/F2BCD207-D6DD-4B3F-887D-3F670C2628A3.jpeg" alt="Memory">
@@ -163,11 +163,11 @@
     </div>
 
     <script>
-        // مصفوفة الصفحات المتقلبة
+        // مصفوفة الصفحات المتقلبة بتواريخ 2025 المظبوطة
         const pages = [
             {
                 title: "يوم ما قولتلك بحبك ❤️",
-                date: "2024-10-03 📅",
+                date: "2025-09-04 📅",
                 img: "https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/refs/heads/main/F2BCD207-D6DD-4B3F-887D-3F670C2628A3.jpeg",
                 label: "بحبك 💕",
                 text: "بحبك اوي<br><br>حقك عليا لو زعلتك 😘<br><br>ربنا يخليكي ليا وعمرنا ما نفترق ابداً ينور عيني."
@@ -226,7 +226,7 @@
         }
         createHearts();
 
-        // فك القفل وتشغيل الأغنية من الملف المكرر
+        // فك القفل وتشغيل الأغنية
         const audio = document.getElementById('bg-audio');
         function unlockSite() {
             const pass = document.getElementById('pass').value.trim().toLowerCase();
@@ -242,16 +242,16 @@
                     document.getElementById('spin-art').classList.remove('paused');
                 }).catch(err => {
                     console.log(err);
-                    alert("الموقع فتح! لو الأغنية مشتغلتش جرب تفتح من متصفح خفي (Incognito) عشان تحديث الكاش.");
+                    alert("الموقع فتح بنجاح! لو الصوت مشتغلش تلقائي افتحه من متصفح خفي (Incognito).");
                 });
             } else {
                 alert("الباسورد غلط يا قمر 😉 (الكلمة هي love)");
             }
         }
 
-        // العداد الزمني
+        // العداد الزمني من تاريخ 4 سبتمبر 2025 بالظبط
         function startCounter() {
-            const startDate = new Date("2024-10-03T00:00:00").getTime(); 
+            const startDate = new Date("2025-09-04T00:00:00").getTime(); 
             setInterval(function() {
                 const now = new Date().getTime();
                 const diff = now - startDate;
