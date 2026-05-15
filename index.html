@@ -3,105 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Love Cinema ❤️</title>
+<title>Love ❤️</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial;
-background:black;
+background:linear-gradient(135deg,#0b0010,#000);
 color:white;
-overflow:hidden;
 text-align:center;
-transition:1s;
-}
-
-/* LOCK */
-.lock{
-position:fixed;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:9999;
-}
-
-.lock input{
-padding:10px;
-margin:5px;
-border-radius:10px;
-border:none;
-text-align:center;
-}
-
-.lock button{
-padding:10px 20px;
-border:none;
-border-radius:20px;
-background:pink;
-font-weight:bold;
-cursor:pointer;
-}
-
-/* MAIN */
-.main{
-display:none;
-padding:10px;
+padding:20px;
 }
 
 /* TITLE */
 h1{
 color:pink;
-font-size:30px;
-margin:15px 0;
+font-size:28px;
+margin-top:10px;
 }
 
-/* COUNTER */
-.counter-card{
-margin:10px auto;
-padding:12px;
+/* CARD */
+.card{
+margin:15px auto;
+padding:15px;
 max-width:350px;
-border-radius:15px;
 background:rgba(255,255,255,0.08);
+border-radius:15px;
 backdrop-filter:blur(10px);
-box-shadow:0 0 20px rgba(255,105,180,0.5);
 color:pink;
-font-weight:bold;
+box-shadow:0 0 15px rgba(255,105,180,0.2);
 font-size:14px;
 }
 
-/* SLIDES */
-.slide{
-position:absolute;
+/* IMAGES */
+img{
 width:100%;
-height:100%;
-object-fit:cover;
-opacity:0;
-transition:1.2s;
-z-index:-1;
-}
-
-.show{ opacity:0.25; }
-
-/* TEXT */
-#text{
-max-width:700px;
-margin:15px auto;
-font-size:17px;
-line-height:1.7;
-min-height:90px;
+max-width:320px;
+margin:10px 0;
+border-radius:15px;
+box-shadow:0 0 10px rgba(255,105,180,0.2);
 }
 
 /* BUTTON */
 button{
-padding:10px 20px;
+padding:12px 20px;
 border:none;
-border-radius:20px;
+border-radius:25px;
 background:pink;
 font-weight:bold;
 cursor:pointer;
@@ -113,7 +61,7 @@ margin-top:10px;
 position:fixed;
 bottom:-10px;
 color:red;
-animation:float 5s linear infinite;
+animation:float 5s linear forwards;
 }
 
 @keyframes float{
@@ -126,141 +74,54 @@ animation:float 5s linear infinite;
 
 <body>
 
-<!-- LOCK -->
-<div class="lock" id="lock">
-<h2>Enter Name & Password ❤️</h2>
-<input id="name" placeholder="Your Name">
-<input id="pass" type="password" placeholder="Password">
-<button onclick="enter()">Enter</button>
-</div>
+<h1>Fekry ❤️ Mariam</h1>
 
-<!-- SLIDES -->
-<img class="slide show" src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/main/IMG_7882.jpeg">
-<img class="slide" src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/main/F2BCD207-D6DD-4B3F-887D-3F670C2628A3.jpeg">
+<div class="card" id="counter"></div>
 
-<!-- MAIN -->
-<div class="main" id="main">
+<img src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/main/IMG_7882.jpeg">
+<img src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/main/F2BCD207-D6DD-4B3F-887D-3F670C2628A3.jpeg">
 
-<h1 id="title">Love Cinema ❤️</h1>
+<button onclick="startMusic()">Open Memory 💖</button>
 
-<div class="counter-card" id="counter"></div>
-
-<button onclick="openMemory()" id="btn">Open Memory 💖</button>
-
-<div id="text"></div>
-
-</div>
-
-<!-- MUSIC -->
-<audio id="music" loop>
+<audio id="music">
 <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d1a7a0c6d2.mp3">
 </audio>
 
 <script>
 
-let musicStarted = false;
-
-/* ENTER */
-function enter(){
-let name=document.getElementById("name").value;
-let pass=document.getElementById("pass").value;
-
-if(pass==="Love"){
-document.getElementById("lock").style.display="none";
-document.getElementById("main").style.display="block";
-
-document.getElementById("title").innerText =
-name + " ❤️ Mariam";
-
-type();
-startCounter();
-startHearts();
-
-}else{
-alert("Wrong Password ❤️");
-}
-}
-
-/* MEMORY BUTTON FIX */
-function openMemory(){
-
-let music=document.getElementById("music");
-
-// تشغيل الصوت بشكل مضمون (iPhone fix)
-if(!musicStarted){
-music.volume=1;
-music.play().catch(()=>{});
-musicStarted=true;
-}
-
-// تغيير شكل الصفحة (تأكيد إنه اشتغل)
-document.body.style.background="radial-gradient(circle,#2b002b,#000)";
-
-// بدء الكتابة لو مش شغالة
-if(t===0){
-type();
-}
-
-// تغيير الزر
-document.getElementById("btn").innerText="Playing ❤️";
-
-}
-
-/* HEARTS */
-function startHearts(){
-setInterval(()=>{
-let h=document.createElement("div");
-h.classList.add("heart");
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.fontSize=Math.random()*25+15+"px";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),5000);
-},400);
+/* MUSIC */
+function startMusic(){
+document.getElementById("music").play().catch(()=>{});
 }
 
 /* COUNTER */
-function startCounter(){
-setInterval(()=>{
 let startDate = new Date("2025-09-04");
-let now = new Date();
 
+setInterval(()=>{
+let now = new Date();
 let diff = now - startDate;
 
-let days = Math.floor(diff/(1000*60*60*24));
-let hours = Math.floor((diff/(1000*60*60))%24);
-let minutes = Math.floor((diff/(1000*60))%60);
-let seconds = Math.floor((diff/1000)%60);
+let d = Math.floor(diff / (1000*60*60*24));
+let h = Math.floor((diff / (1000*60*60)) % 24);
+let m = Math.floor((diff / (1000*60)) % 60);
+let s = Math.floor((diff / 1000) % 60);
 
 document.getElementById("counter").innerHTML =
-"💖 4/9/2025<br>" +
-"⏳ " + days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s";
+"💖 Our Journey Together<br><br>" +
+d+"d : "+h+"h : "+m+"m : "+s+"s";
+
 },1000);
-}
 
-/* SLIDES */
-let slides=document.querySelectorAll(".slide");
-let i=0;
-
+/* HEARTS */
 setInterval(()=>{
-slides.forEach(s=>s.classList.remove("show"));
-slides[i].classList.add("show");
-i++;
-if(i>=slides.length) i=0;
-},3000);
-
-/* TEXT */
-let text="بحبك اوي يا مريم ❤️ انتي مش مجرد حب، انتي حياتي كلها ❤️ ربنا يخليكي ليا ويبعد عنك أي حاجة وحشة ❤️";
-let words=text.split(" ");
-let t=0;
-
-function type(){
-if(t<words.length){
-document.getElementById("text").innerHTML += words[t]+" ";
-t++;
-setTimeout(type,350);
-}
-}
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(14+Math.random()*18)+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},500);
 
 </script>
 
