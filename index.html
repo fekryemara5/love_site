@@ -199,7 +199,7 @@
             <div class="heart-content">
                 <h2>جاهزهـ😉</h2>
                 <p>فكري & مريم</p>
-                <input type="password" id="pass" class="pass-input" placeholder="Password">
+                <input type="password" id="mySecretPass" class="pass-input" placeholder="Password">
                 <div id="error-txt" class="error">كلمة المرور خاطئة! ❌</div>
             </div>
         </div>
@@ -241,19 +241,20 @@
             </div>
         </div>
         <audio id="bg-music" loop>
-            <source src="https://bayanat.ai/files/track.mp3" type="audio/mpeg">
+            <source src="music.mp3" type="audio/mpeg">
         </audio>
         <button class="play-btn" onclick="toggleMusic()" id="play-icon">▶</button>
     </div>
 
     <script>
         function unlockSite() {
-            const password = document.getElementById('pass').value;
-            // الحماية هنا تتأكد من كلمة love
-            if(password.trim().toLowerCase() === "love") {
-                document.getElementById('lock-screen').style.display = 'none';
-                document.getElementById('main-site').style.display = 'block';
-                document.getElementById('custom-player').style.display = 'flex';
+            const password = document.getElementById('mySecretPass').value.trim().toLowerCase();
+            
+            if(password === "love") {
+                document.getElementById('lock-screen').style.setProperty('display', 'none', 'important');
+                document.getElementById('main-site').style.setProperty('display', 'block', 'important');
+                document.getElementById('custom-player').style.setProperty('display', 'flex', 'important');
+                
                 startCounter();
             } else {
                 document.getElementById('error-txt').style.display = 'block';
