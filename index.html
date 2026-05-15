@@ -189,7 +189,17 @@
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
         .error { color: #ff8ca3; font-size: 14px; margin-top: 10px; display: none; }
+        
+        /* إخفاء مشغل يوتيوب تماماً خلف الكواليس */
+        #youtube-frame {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
+    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
@@ -237,25 +247,57 @@
             <img src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/refs/heads/main/IMG_7882.jpeg" alt="album-art">
             <div>
                 <div style="font-weight: bold;">وانا جنب حبيبي 😍</div>
-                <div style="font-size: 11px; opacity: 0.7;">عمرو دياب</div>
+                <div style="font-size: 11px; opacity: 0.7;">عمرو دياب (Youtube Stream)</div>
             </div>
         </div>
-        <audio id="bg-music" loop>
-            <source src="music.mp3" type="audio/mpeg">
-        </audio>
+        <div id="youtube-frame"></div>
         <button class="play-btn" onclick="toggleMusic()" id="play-icon">▶</button>
     </div>
 
     <script>
+        let player;
+        let isPlaying = false;
+
+        // تجهيز مشغل يوتيوب بالأغنية الرسمية خلف الكواليس
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-frame', {
+                height: '1',
+                width: '1',
+                videoId: 'f9N2Dcc_4Yg', // المعرف الرسمي لأغنية وانا جنب حبيبي
+                playerVars: {
+                    'autoplay': 0,
+                    'loop': 1,
+                    'playlist': 'f9N2Dcc_4Yg'
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            console.log("المشغل جاهز وآمن");
+        }
+
         function unlockSite() {
             const password = document.getElementById('mySecretPass').value.trim().toLowerCase();
             
             if(password === "love") {
                 document.getElementById('lock-screen').style.setProperty('display', 'none', 'important');
-                document.getElementById('main-site').style.setProperty('display', 'block', 'important');
+                document.getElementById('main-site').style.setProperty('important', 'block', 'important');
+                document.getElementById('main-site').style.display = 'block';
                 document.getElementById('custom-player').style.setProperty('display', 'flex', 'important');
                 
                 startCounter();
+                
+                // تشغيل تلقائي مدعوم بحركة فتح القفل
+                setTimeout(() => {
+                    if(player && typeof player.playVideo === 'function') {
+                        player.playVideo();
+                        document.getElementById('play-icon').innerText = "⏸";
+                        isPlaying = true;
+                    }
+                }, 300);
             } else {
                 document.getElementById('error-txt').style.display = 'block';
             }
@@ -276,9 +318,17 @@
         }
 
         function toggleMusic() {
-            const audio = document.getElementById('bg-music');
-            if (audio.paused) { audio.play(); document.getElementById('play-icon').innerText = "⏸"; }
-            else { audio.pause(); document.getElementById('play-icon').innerText = "▶"; }
+            if (!player) return;
+            
+            if (!isPlaying) {
+                player.playVideo();
+                document.getElementById('play-icon').innerText = "⏸";
+                isPlaying = true;
+            } else {
+                player.pauseVideo();
+                document.getElementById('play-icon').innerText = "▶";
+                isPlaying = false;
+            }
         }
     </script>
 </body>
