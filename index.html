@@ -15,9 +15,10 @@ background:black;
 color:white;
 overflow:hidden;
 text-align:center;
+transition:1s;
 }
 
-/* ===== LOCK ===== */
+/* LOCK */
 .lock{
 position:fixed;
 width:100%;
@@ -47,56 +48,31 @@ font-weight:bold;
 cursor:pointer;
 }
 
-/* ===== INTRO ===== */
-.intro{
-position:fixed;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:9998;
-opacity:0;
-animation:intro 3s forwards;
-}
-
-@keyframes intro{
-0%{opacity:0;transform:scale(1.2);}
-30%{opacity:1;}
-100%{opacity:0;transform:scale(1);}
-}
-
-/* ===== MAIN ===== */
+/* MAIN */
 .main{
 display:none;
-animation:show 1s forwards;
-}
-
-@keyframes show{
-from{opacity:0;}
-to{opacity:1;}
+padding:10px;
 }
 
 /* TITLE */
 h1{
 color:pink;
-font-size:35px;
-margin-top:20px;
+font-size:30px;
+margin:15px 0;
 }
 
 /* COUNTER */
 .counter-card{
-margin:15px auto;
-padding:15px;
+margin:10px auto;
+padding:12px;
 max-width:350px;
-border-radius:20px;
+border-radius:15px;
 background:rgba(255,255,255,0.08);
 backdrop-filter:blur(10px);
-box-shadow:0 0 25px rgba(255,105,180,0.6);
+box-shadow:0 0 20px rgba(255,105,180,0.5);
 color:pink;
 font-weight:bold;
+font-size:14px;
 }
 
 /* SLIDES */
@@ -106,35 +82,33 @@ width:100%;
 height:100%;
 object-fit:cover;
 opacity:0;
-transition:1.5s;
+transition:1.2s;
 z-index:-1;
 }
 
-.show{
-opacity:0.3;
-}
+.show{ opacity:0.25; }
 
 /* TEXT */
 #text{
 max-width:700px;
-margin:20px auto;
-font-size:18px;
+margin:15px auto;
+font-size:17px;
 line-height:1.7;
-min-height:100px;
+min-height:90px;
 }
 
 /* BUTTON */
 button{
-padding:12px 25px;
+padding:10px 20px;
 border:none;
-border-radius:25px;
+border-radius:20px;
 background:pink;
 font-weight:bold;
 cursor:pointer;
 margin-top:10px;
 }
 
-/* HEART */
+/* HEARTS */
 .heart{
 position:fixed;
 bottom:-10px;
@@ -145,24 +119,6 @@ animation:float 5s linear infinite;
 @keyframes float{
 0%{transform:translateY(0);opacity:1;}
 100%{transform:translateY(-120vh);opacity:0;}
-}
-
-/* BIG HEART */
-.big-heart{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:120px;
-opacity:0;
-animation:heartPop 2s ease;
-z-index:9999;
-}
-
-@keyframes heartPop{
-0%{opacity:0;transform:translate(-50%,-50%) scale(0.5);}
-50%{opacity:1;transform:translate(-50%,-50%) scale(1.2);}
-100%{opacity:0;transform:translate(-50%,-50%) scale(0.5);}
 }
 
 </style>
@@ -178,12 +134,6 @@ z-index:9999;
 <button onclick="enter()">Enter</button>
 </div>
 
-<!-- INTRO -->
-<div class="intro" id="intro">
-<h1>💖 Love Story 💖</h1>
-<p>Fekry ❤️ Mariam</p>
-</div>
-
 <!-- SLIDES -->
 <img class="slide show" src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/main/IMG_7882.jpeg">
 <img class="slide" src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/main/F2BCD207-D6DD-4B3F-887D-3F670C2628A3.jpeg">
@@ -195,7 +145,7 @@ z-index:9999;
 
 <div class="counter-card" id="counter"></div>
 
-<button onclick="openMemory()">Open Memory 💖</button>
+<button onclick="openMemory()" id="btn">Open Memory 💖</button>
 
 <div id="text"></div>
 
@@ -203,10 +153,12 @@ z-index:9999;
 
 <!-- MUSIC -->
 <audio id="music" loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d1a7a0c6d2.mp3?filename=romantic-music-ambient-110397.mp3">
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d1a7a0c6d2.mp3">
 </audio>
 
 <script>
+
+let musicStarted = false;
 
 /* ENTER */
 function enter(){
@@ -220,34 +172,42 @@ document.getElementById("main").style.display="block";
 document.getElementById("title").innerText =
 name + " ❤️ Mariam";
 
-showHeart();
 type();
+startCounter();
+startHearts();
+
 }else{
 alert("Wrong Password ❤️");
 }
 }
 
-/* BIG HEART */
-function showHeart(){
-let h=document.createElement("div");
-h.classList.add("big-heart");
-h.innerHTML="❤️";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),2000);
+/* MEMORY BUTTON FIX */
+function openMemory(){
+
+let music=document.getElementById("music");
+
+// تشغيل الصوت بشكل مضمون (iPhone fix)
+if(!musicStarted){
+music.volume=1;
+music.play().catch(()=>{});
+musicStarted=true;
 }
 
-/* SLIDES */
-let slides=document.querySelectorAll(".slide");
-let index=0;
+// تغيير شكل الصفحة (تأكيد إنه اشتغل)
+document.body.style.background="radial-gradient(circle,#2b002b,#000)";
 
-setInterval(()=>{
-slides.forEach(s=>s.classList.remove("show"));
-slides[index].classList.add("show");
-index++;
-if(index>=slides.length) index=0;
-},3000);
+// بدء الكتابة لو مش شغالة
+if(t===0){
+type();
+}
+
+// تغيير الزر
+document.getElementById("btn").innerText="Playing ❤️";
+
+}
 
 /* HEARTS */
+function startHearts(){
 setInterval(()=>{
 let h=document.createElement("div");
 h.classList.add("heart");
@@ -256,11 +216,12 @@ h.style.left=Math.random()*100+"vw";
 h.style.fontSize=Math.random()*25+15+"px";
 document.body.appendChild(h);
 setTimeout(()=>h.remove(),5000);
-},300);
+},400);
+}
 
 /* COUNTER */
-function updateCounter(){
-
+function startCounter(){
+setInterval(()=>{
 let startDate = new Date("2025-09-04");
 let now = new Date();
 
@@ -274,28 +235,31 @@ let seconds = Math.floor((diff/1000)%60);
 document.getElementById("counter").innerHTML =
 "💖 4/9/2025<br>" +
 "⏳ " + days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s";
+},1000);
 }
 
-setInterval(updateCounter,1000);
-updateCounter();
+/* SLIDES */
+let slides=document.querySelectorAll(".slide");
+let i=0;
+
+setInterval(()=>{
+slides.forEach(s=>s.classList.remove("show"));
+slides[i].classList.add("show");
+i++;
+if(i>=slides.length) i=0;
+},3000);
 
 /* TEXT */
 let text="بحبك اوي يا مريم ❤️ انتي مش مجرد حب، انتي حياتي كلها ❤️ ربنا يخليكي ليا ويبعد عنك أي حاجة وحشة ❤️";
 let words=text.split(" ");
-let i=0;
+let t=0;
 
 function type(){
-if(i<words.length){
-document.getElementById("text").innerHTML += words[i]+" ";
-i++;
+if(t<words.length){
+document.getElementById("text").innerHTML += words[t]+" ";
+t++;
 setTimeout(type,350);
 }
-}
-
-/* MEMORY */
-function openMemory(){
-document.getElementById("music").play();
-if(i===0) type();
 }
 
 </script>
