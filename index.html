@@ -4,128 +4,104 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Our Love Story ❤️</title>
+<title>Fekry ❤️ Mariam</title>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
 body{
-font-family:Arial, sans-serif;
-background:black;
-overflow-x:hidden;
+margin:0;
+font-family:Arial;
+background:radial-gradient(circle,#000,#120012);
 color:white;
 text-align:center;
+overflow-x:hidden;
 }
 
-.hero{
-height:100vh;
+.lock{
+position:fixed;
+width:100%;
+height:100%;
+background:black;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-background:linear-gradient(to bottom,#000,#1a001a);
-position:relative;
+z-index:9999;
 }
 
-.hero h1{
-font-size:55px;
-color:pink;
-margin-bottom:20px;
-animation:glow 2s infinite alternate;
-}
-
-.hero p{
-font-size:22px;
-width:80%;
-max-width:600px;
-line-height:1.6;
-}
-
-@keyframes glow{
-from{
-text-shadow:0 0 10px pink;
-}
-to{
-text-shadow:0 0 30px hotpink;
-}
-}
-
-.gallery{
-padding:50px 20px;
-}
-
-.gallery h2{
-font-size:40px;
-margin-bottom:30px;
-color:pink;
-}
-
-.photos{
-display:flex;
-gap:20px;
-overflow-x:auto;
+input{
 padding:10px;
+border-radius:10px;
+border:none;
+text-align:center;
 }
 
-.photos img{
-width:250px;
-height:350px;
-object-fit:cover;
+button{
+padding:10px 20px;
+margin-top:10px;
+border:none;
 border-radius:20px;
-transition:0.5s;
+background:pink;
+font-weight:bold;
+cursor:pointer;
 }
 
-.photos img:hover{
-transform:scale(1.08);
+h1{
+color:pink;
+font-size:40px;
+margin-top:20px;
 }
 
 .counter{
-margin:60px 0;
-font-size:30px;
 color:pink;
+margin:15px;
+font-size:20px;
+}
+
+.typing{
+font-size:18px;
+max-width:700px;
+margin:20px auto;
+line-height:1.7;
+min-height:80px;
+padding:0 10px;
+}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+padding:20px;
+max-width:600px;
+margin:auto;
+}
+
+.gallery img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:15px;
+transition:0.3s;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+.musicBtn{
+margin:15px;
 }
 
 .heart{
 position:fixed;
-bottom:-20px;
+bottom:-10px;
 color:red;
 animation:float 5s linear infinite;
 }
 
 @keyframes float{
-0%{
-transform:translateY(0);
-opacity:1;
-}
-100%{
-transform:translateY(-120vh);
-opacity:0;
-}
-}
-
-button{
-padding:15px 30px;
-border:none;
-border-radius:30px;
-background:pink;
-color:black;
-font-size:18px;
-cursor:pointer;
-margin-top:30px;
-font-weight:bold;
-}
-
-button:hover{
-transform:scale(1.05);
-}
-
-audio{
-display:none;
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-120vh);opacity:0;}
 }
 
 </style>
@@ -133,87 +109,91 @@ display:none;
 
 <body>
 
-<section class="hero">
-
-<h1>❤️ Our Love Story ❤️</h1>
-
-<p>
-Every moment with you becomes my favorite memory.
-You are my happiness, my comfort, and my forever.
-</p>
-
-<button onclick="playMusic()">
-Play Music 🎵
-</button>
-
-</section>
-
-<section class="counter">
-
-<p id="days"></p>
-
-</section>
-
-<section class="gallery">
-
-<h2>Our Memories 📸</h2>
-
-<div class="photos">
-
-<img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=800">
-
-<img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=800">
-
-<img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800">
-
-<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800">
-
+<!-- PASSWORD SCREEN -->
+<div class="lock" id="lock">
+<h2>Enter Password ❤️</h2>
+<input type="password" id="pass" placeholder="Password">
+<button onclick="checkPass()">Enter</button>
 </div>
 
-</section>
+<!-- MAIN CONTENT -->
+<h1>Fekry ❤️ Mariam</h1>
+
+<div class="counter" id="days"></div>
+
+<!-- MUSIC -->
+<button class="musicBtn" onclick="toggleMusic()">Play / Pause Music 🎵</button>
 
 <audio id="music" loop>
-<source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d1a7a0c6d2.mp3?filename=romantic-music-ambient-110397.mp3" type="audio/mp3">
 </audio>
+
+<!-- TYPING LOVE MESSAGE -->
+<div class="typing" id="typing"></div>
+
+<!-- GALLERY -->
+<div class="gallery">
+<img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7">
+<img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1">
+<img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2">
+<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9">
+</div>
 
 <script>
 
-function createHeart(){
-
-const heart=document.createElement("div");
-
-heart.classList.add("heart");
-
-heart.innerHTML="❤️";
-
-heart.style.left=Math.random()*100+"vw";
-
-heart.style.fontSize=Math.random()*30+20+"px";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>{
-heart.remove();
-},5000);
-
+// PASSWORD
+function checkPass(){
+let p=document.getElementById("pass").value;
+if(p==="Love"){
+document.getElementById("lock").style.display="none";
+}else{
+alert("Wrong Password ❤️");
+}
 }
 
-setInterval(createHeart,300);
+// HEARTS
+setInterval(()=>{
+let h=document.createElement("div");
+h.classList.add("heart");
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=Math.random()*25+15+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},300);
 
-function playMusic(){
-document.getElementById("music").play();
+// DAYS COUNTER
+let startDate=new Date("2025-09-04");
+let now=new Date();
+let diff=now-startDate;
+let days=Math.floor(diff/(1000*60*60*24));
+
+document.getElementById("days").innerHTML=
+"❤️ Together for "+days+" days ❤️";
+
+// MUSIC TOGGLE
+function toggleMusic(){
+let m=document.getElementById("music");
+if(m.paused){
+m.play();
+}else{
+m.pause();
+}
 }
 
-const startDate = new Date("2024-01-01");
+// TYPING EFFECT
+let text="بحبك اوي يا مريم ❤️ انتي احسن حاجة حصلتلي في حياتي، وجودك في حياتي هو العوض الحقيقي والسند ليا طول العمر ❤️";
+let i=0;
 
-const today = new Date();
+function type(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,50);
+}
+}
 
-const diff = today - startDate;
-
-const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-document.getElementById("days").innerHTML =
-`❤️ Together for ${days} days ❤️`;
+type();
 
 </script>
 
