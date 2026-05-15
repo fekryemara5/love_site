@@ -4,19 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Fekry ❤️ Mariam</title>
+<title>Love Story ❤️</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial;
-background:radial-gradient(circle,#000,#120012);
+background:radial-gradient(circle,#000,#120012,#000);
 color:white;
 text-align:center;
 overflow-x:hidden;
 }
 
+/* LOCK SCREEN */
 .lock{
 position:fixed;
 width:100%;
@@ -29,16 +30,16 @@ align-items:center;
 z-index:9999;
 }
 
-input{
+.lock input{
 padding:10px;
-border-radius:10px;
 border:none;
+border-radius:10px;
 text-align:center;
 }
 
-button{
-padding:10px 20px;
+.lock button{
 margin-top:10px;
+padding:10px 20px;
 border:none;
 border-radius:20px;
 background:pink;
@@ -46,52 +47,50 @@ font-weight:bold;
 cursor:pointer;
 }
 
+/* MAIN */
+.main{
+display:none;
+padding:20px;
+}
+
+/* TITLE */
 h1{
 color:pink;
-font-size:40px;
+font-size:38px;
 margin-top:20px;
 }
 
-.counter{
+/* COUNTER CARD */
+.counter-card{
+margin:20px auto;
+padding:20px;
+max-width:350px;
+border-radius:20px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(10px);
+box-shadow:0 0 25px rgba(255,105,180,0.5);
+border:1px solid rgba(255,255,255,0.2);
 color:pink;
-margin:15px;
-font-size:20px;
+font-weight:bold;
+font-size:18px;
+animation:glowBox 2s infinite alternate;
 }
 
-.typing{
-font-size:18px;
+@keyframes glowBox{
+from{box-shadow:0 0 15px pink;}
+to{box-shadow:0 0 35px hotpink;}
+}
+
+/* TEXT */
+#text{
 max-width:700px;
 margin:20px auto;
+font-size:18px;
 line-height:1.7;
-min-height:80px;
-padding:0 10px;
+min-height:120px;
 }
 
-.gallery{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-padding:20px;
-max-width:600px;
-margin:auto;
-}
-
-.gallery img{
-width:100%;
-height:200px;
-object-fit:cover;
-border-radius:15px;
-transition:0.3s;
-}
-
-.gallery img:hover{
-transform:scale(1.05);
-}
-
-.musicBtn{
-margin:15px;
-}
-
+/* HEARTS */
 .heart{
 position:fixed;
 bottom:-10px;
@@ -104,54 +103,87 @@ animation:float 5s linear infinite;
 100%{transform:translateY(-120vh);opacity:0;}
 }
 
+/* GALLERY */
+.gallery{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+max-width:600px;
+margin:20px auto;
+}
+
+.gallery img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:15px;
+}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:20px;
+background:pink;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- PASSWORD SCREEN -->
+<!-- LOCK -->
 <div class="lock" id="lock">
 <h2>Enter Password ❤️</h2>
+<input type="text" id="name" placeholder="Your Name"><br><br>
 <input type="password" id="pass" placeholder="Password">
-<button onclick="checkPass()">Enter</button>
+<button onclick="enter()">Enter</button>
 </div>
 
-<!-- MAIN CONTENT -->
-<h1>Fekry ❤️ Mariam</h1>
+<!-- MAIN -->
+<div class="main" id="main">
 
-<div class="counter" id="days"></div>
+<h1 id="title">Love Story ❤️</h1>
 
-<!-- MUSIC -->
-<button class="musicBtn" onclick="toggleMusic()">Play / Pause Music 🎵</button>
+<div class="counter-card" id="counter"></div>
 
-<audio id="music" loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d1a7a0c6d2.mp3?filename=romantic-music-ambient-110397.mp3" type="audio/mp3">
-</audio>
+<div id="text"></div>
 
-<!-- TYPING LOVE MESSAGE -->
-<div class="typing" id="typing"></div>
+<button onclick="openBook()">Open Memory Book 📸</button>
 
 <!-- GALLERY -->
-<div class="gallery">
+<div class="gallery" id="gallery" style="display:none;">
 <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7">
 <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1">
 <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2">
 <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9">
 </div>
 
+</div>
+
 <script>
 
-// PASSWORD
-function checkPass(){
-let p=document.getElementById("pass").value;
-if(p==="Love"){
+/* ENTER */
+function enter(){
+let pass=document.getElementById("pass").value;
+let name=document.getElementById("name").value;
+
+if(pass==="Love"){
 document.getElementById("lock").style.display="none";
+document.getElementById("main").style.display="block";
+
+document.getElementById("title").innerText =
+name + " ❤️ Mariam";
+
+startText();
 }else{
 alert("Wrong Password ❤️");
 }
 }
 
-// HEARTS
+/* HEARTS */
 setInterval(()=>{
 let h=document.createElement("div");
 h.classList.add("heart");
@@ -162,38 +194,47 @@ document.body.appendChild(h);
 setTimeout(()=>h.remove(),5000);
 },300);
 
-// DAYS COUNTER
-let startDate=new Date("2025-09-04");
-let now=new Date();
-let diff=now-startDate;
-let days=Math.floor(diff/(1000*60*60*24));
+/* COUNTER */
+function updateCounter(){
 
-document.getElementById("days").innerHTML=
-"❤️ Together for "+days+" days ❤️";
+let startDate = new Date("2025-09-04");
+let now = new Date();
 
-// MUSIC TOGGLE
-function toggleMusic(){
-let m=document.getElementById("music");
-if(m.paused){
-m.play();
-}else{
-m.pause();
+let diff = now - startDate;
+
+let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+let minutes = Math.floor((diff / (1000 * 60)) % 60);
+let seconds = Math.floor((diff / 1000) % 60);
+
+document.getElementById("counter").innerHTML =
+"💖 بدايتنا: 4/9/2025<br><br>" +
+"⏳ " + days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s<br><br>" +
+"✨ وكل ثانية بتعدي وانتي في قلبي ✨";
 }
-}
 
-// TYPING EFFECT
-let text="بحبك اوي يا مريم ❤️ انتي احسن حاجة حصلتلي في حياتي، وجودك في حياتي هو العوض الحقيقي والسند ليا طول العمر ❤️";
+setInterval(updateCounter,1000);
+updateCounter();
+
+/* TYPE TEXT */
+let text="بحبك اوي يا مريم ❤️ انتي مش مجرد حب، انتي حياتي كلها ❤️ ربنا يخليكي ليا ويبعد عنك أي حاجة وحشة ❤️";
+let words=text.split(" ");
 let i=0;
 
-function type(){
-if(i<text.length){
-document.getElementById("typing").innerHTML+=text.charAt(i);
+function startText(){
+if(i<words.length){
+document.getElementById("text").innerHTML += words[i]+" ";
 i++;
-setTimeout(type,50);
+setTimeout(startText,350);
 }
 }
 
-type();
+/* MEMORY BOOK */
+function openBook(){
+let g=document.getElementById("gallery");
+g.style.display =
+(g.style.display==="block") ? "none" : "block";
+}
 
 </script>
 
