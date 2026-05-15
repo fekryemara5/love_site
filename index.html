@@ -249,16 +249,11 @@
     <script>
         function unlockSite() {
             const password = document.getElementById('pass').value;
-            if(password.toLowerCase() === "love") {
+            // الحماية هنا تتأكد من كلمة love
+            if(password.trim().toLowerCase() === "love") {
                 document.getElementById('lock-screen').style.display = 'none';
                 document.getElementById('main-site').style.display = 'block';
                 document.getElementById('custom-player').style.display = 'flex';
-                
-                var audio = document.getElementById('bg-music');
-                audio.play().catch(function(error) {
-                    console.log("التحميل التلقائي للموسيقى مفعل");
-                });
-                document.getElementById('play-icon').innerText = "⏸";
                 startCounter();
             } else {
                 document.getElementById('error-txt').style.display = 'block';
@@ -266,14 +261,12 @@
         }
 
         function startCounter() {
-            // ضبط تاريخ البداية بدقة 4 سبتمبر 2025
             const startDate = new Date("2025-09-04T00:00:00").getTime(); 
 
             setInterval(function() {
                 const now = new Date().getTime();
                 const diff = now - startDate;
                 
-                // حساب الأيام والساعات والدقائق والثواني بدقة
                 document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
                 document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 document.getElementById("mins").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -286,6 +279,6 @@
             if (audio.paused) { audio.play(); document.getElementById('play-icon').innerText = "⏸"; }
             else { audio.pause(); document.getElementById('play-icon').innerText = "▶"; }
         }
-    </style>
+    </script>
 </body>
 </html>
