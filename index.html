@@ -4,20 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Love Story ❤️</title>
+<title>Love Cinema ❤️</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial;
-background:radial-gradient(circle,#000,#120012,#000);
+background:black;
 color:white;
+overflow:hidden;
 text-align:center;
-overflow-x:hidden;
 }
 
-/* LOCK SCREEN */
+/* ===== LOCK ===== */
 .lock{
 position:fixed;
 width:100%;
@@ -32,13 +32,13 @@ z-index:9999;
 
 .lock input{
 padding:10px;
-border:none;
+margin:5px;
 border-radius:10px;
+border:none;
 text-align:center;
 }
 
 .lock button{
-margin-top:10px;
 padding:10px 20px;
 border:none;
 border-radius:20px;
@@ -47,38 +47,71 @@ font-weight:bold;
 cursor:pointer;
 }
 
-/* MAIN */
+/* ===== INTRO ===== */
+.intro{
+position:fixed;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:9998;
+opacity:0;
+animation:intro 3s forwards;
+}
+
+@keyframes intro{
+0%{opacity:0;transform:scale(1.2);}
+30%{opacity:1;}
+100%{opacity:0;transform:scale(1);}
+}
+
+/* ===== MAIN ===== */
 .main{
 display:none;
-padding:20px;
+animation:show 1s forwards;
+}
+
+@keyframes show{
+from{opacity:0;}
+to{opacity:1;}
 }
 
 /* TITLE */
 h1{
 color:pink;
-font-size:38px;
+font-size:35px;
 margin-top:20px;
 }
 
-/* COUNTER CARD */
+/* COUNTER */
 .counter-card{
-margin:20px auto;
-padding:20px;
+margin:15px auto;
+padding:15px;
 max-width:350px;
 border-radius:20px;
 background:rgba(255,255,255,0.08);
 backdrop-filter:blur(10px);
-box-shadow:0 0 25px rgba(255,105,180,0.5);
-border:1px solid rgba(255,255,255,0.2);
+box-shadow:0 0 25px rgba(255,105,180,0.6);
 color:pink;
 font-weight:bold;
-font-size:18px;
-animation:glowBox 2s infinite alternate;
 }
 
-@keyframes glowBox{
-from{box-shadow:0 0 15px pink;}
-to{box-shadow:0 0 35px hotpink;}
+/* SLIDES */
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0;
+transition:1.5s;
+z-index:-1;
+}
+
+.show{
+opacity:0.3;
 }
 
 /* TEXT */
@@ -87,10 +120,21 @@ max-width:700px;
 margin:20px auto;
 font-size:18px;
 line-height:1.7;
-min-height:120px;
+min-height:100px;
 }
 
-/* HEARTS */
+/* BUTTON */
+button{
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:pink;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+/* HEART */
 .heart{
 position:fixed;
 bottom:-10px;
@@ -103,30 +147,22 @@ animation:float 5s linear infinite;
 100%{transform:translateY(-120vh);opacity:0;}
 }
 
-/* GALLERY */
-.gallery{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-max-width:600px;
-margin:20px auto;
+/* BIG HEART */
+.big-heart{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:120px;
+opacity:0;
+animation:heartPop 2s ease;
+z-index:9999;
 }
 
-.gallery img{
-width:100%;
-height:200px;
-object-fit:cover;
-border-radius:15px;
-}
-
-button{
-padding:10px 20px;
-border:none;
-border-radius:20px;
-background:pink;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
+@keyframes heartPop{
+0%{opacity:0;transform:translate(-50%,-50%) scale(0.5);}
+50%{opacity:1;transform:translate(-50%,-50%) scale(1.2);}
+100%{opacity:0;transform:translate(-50%,-50%) scale(0.5);}
 }
 
 </style>
@@ -136,39 +172,46 @@ margin-top:10px;
 
 <!-- LOCK -->
 <div class="lock" id="lock">
-<h2>Enter Password ❤️</h2>
-<input type="text" id="name" placeholder="Your Name"><br><br>
-<input type="password" id="pass" placeholder="Password">
+<h2>Enter Name & Password ❤️</h2>
+<input id="name" placeholder="Your Name">
+<input id="pass" type="password" placeholder="Password">
 <button onclick="enter()">Enter</button>
 </div>
+
+<!-- INTRO -->
+<div class="intro" id="intro">
+<h1>💖 Love Story 💖</h1>
+<p>Fekry ❤️ Mariam</p>
+</div>
+
+<!-- SLIDES -->
+<img class="slide show" src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/main/IMG_7882.jpeg">
+<img class="slide" src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/main/F2BCD207-D6DD-4B3F-887D-3F670C2628A3.jpeg">
 
 <!-- MAIN -->
 <div class="main" id="main">
 
-<h1 id="title">Love Story ❤️</h1>
+<h1 id="title">Love Cinema ❤️</h1>
 
 <div class="counter-card" id="counter"></div>
 
+<button onclick="openMemory()">Open Memory 💖</button>
+
 <div id="text"></div>
 
-<button onclick="openBook()">Open Memory Book 📸</button>
-
-<!-- GALLERY -->
-<div class="gallery" id="gallery" style="display:none;">
-<img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7">
-<img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1">
-<img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2">
-<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9">
 </div>
 
-</div>
+<!-- MUSIC -->
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d1a7a0c6d2.mp3?filename=romantic-music-ambient-110397.mp3">
+</audio>
 
 <script>
 
 /* ENTER */
 function enter(){
-let pass=document.getElementById("pass").value;
 let name=document.getElementById("name").value;
+let pass=document.getElementById("pass").value;
 
 if(pass==="Love"){
 document.getElementById("lock").style.display="none";
@@ -177,11 +220,32 @@ document.getElementById("main").style.display="block";
 document.getElementById("title").innerText =
 name + " ❤️ Mariam";
 
-startText();
+showHeart();
+type();
 }else{
 alert("Wrong Password ❤️");
 }
 }
+
+/* BIG HEART */
+function showHeart(){
+let h=document.createElement("div");
+h.classList.add("big-heart");
+h.innerHTML="❤️";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),2000);
+}
+
+/* SLIDES */
+let slides=document.querySelectorAll(".slide");
+let index=0;
+
+setInterval(()=>{
+slides.forEach(s=>s.classList.remove("show"));
+slides[index].classList.add("show");
+index++;
+if(index>=slides.length) index=0;
+},3000);
 
 /* HEARTS */
 setInterval(()=>{
@@ -202,38 +266,36 @@ let now = new Date();
 
 let diff = now - startDate;
 
-let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-let minutes = Math.floor((diff / (1000 * 60)) % 60);
-let seconds = Math.floor((diff / 1000) % 60);
+let days = Math.floor(diff/(1000*60*60*24));
+let hours = Math.floor((diff/(1000*60*60))%24);
+let minutes = Math.floor((diff/(1000*60))%60);
+let seconds = Math.floor((diff/1000)%60);
 
 document.getElementById("counter").innerHTML =
-"💖 بدايتنا: 4/9/2025<br><br>" +
-"⏳ " + days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s<br><br>" +
-"✨ وكل ثانية بتعدي وانتي في قلبي ✨";
+"💖 4/9/2025<br>" +
+"⏳ " + days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s";
 }
 
 setInterval(updateCounter,1000);
 updateCounter();
 
-/* TYPE TEXT */
+/* TEXT */
 let text="بحبك اوي يا مريم ❤️ انتي مش مجرد حب، انتي حياتي كلها ❤️ ربنا يخليكي ليا ويبعد عنك أي حاجة وحشة ❤️";
 let words=text.split(" ");
 let i=0;
 
-function startText(){
+function type(){
 if(i<words.length){
 document.getElementById("text").innerHTML += words[i]+" ";
 i++;
-setTimeout(startText,350);
+setTimeout(type,350);
 }
 }
 
-/* MEMORY BOOK */
-function openBook(){
-let g=document.getElementById("gallery");
-g.style.display =
-(g.style.display==="block") ? "none" : "block";
+/* MEMORY */
+function openMemory(){
+document.getElementById("music").play();
+if(i===0) type();
 }
 
 </script>
