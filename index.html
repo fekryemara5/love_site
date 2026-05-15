@@ -4,332 +4,299 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>فكري & مريم 💖</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-color: #6b0f24; 
-            --card-bg: rgba(255, 255, 255, 0.1);
-            --border-color: rgba(255, 255, 255, 0.2);
-            --text-color: #ffffff;
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { margin: 0; padding: 0; background: linear-gradient(135deg, #7c0a1f, #4a0310); color: white; min-height: 100vh; overflow-x: hidden; position: relative; }
+
+        /* القلوب الطايرة */
+        .floating-hearts-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        .heart-float { position: absolute; bottom: -10%; font-size: 24px; animation: floatUp linear infinite; opacity: 0.6; filter: drop-shadow(0 0 10px rgba(255,192,203,0.5)); }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-120vh) scale(1.5) rotate(360deg); opacity: 0; }
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #4a0717, #80152e);
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-        }
+        .glass-box { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 20px; padding: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
 
-        #lock-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            z-index: 10;
-        }
+        /* شاشة القفل */
+        #lock-screen { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 50; background: linear-gradient(135deg, #7c0a1f, #4a0310); }
+        .lock-container { display: flex; flex-direction: column; align-items: center; margin-top: -50px; }
+        .avatar-top { width: 80px; height: 80px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.6); object-fit: cover; position: relative; z-index: 10; margin-bottom: -35px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .heart-bg { background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="%23c91432" d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>'); background-size: cover; background-position: center; width: 320px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 30px; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4)); }
+        .heart-bg h2 { margin: 0; font-size: 28px; font-weight: 800; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        .heart-bg p { font-size: 14px; margin: 5px 0 25px 0; font-weight: 600; }
+        .pass-input { background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); padding: 12px 20px; border-radius: 20px; color: white; text-align: center; font-size: 16px; outline: none; width: 200px; backdrop-filter: blur(5px); margin-bottom: 15px; }
+        .unlock-btn { background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding: 12px 40px; border-radius: 20px; font-size: 18px; font-weight: bold; cursor: pointer; backdrop-filter: blur(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
-        .avatar {
-            width: 85px;
-            height: 85px;
-            border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.5);
-            object-fit: cover;
-            margin-bottom: -20px;
-            z-index: 2;
-        }
-
-        .heart-box {
-            background: #a81c3e;
-            width: 280px;
-            height: 280px;
-            position: relative;
-            transform: rotate(-45deg);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .heart-box::before, .heart-box::after {
-            content: "";
-            background: #a81c3e;
-            border-radius: 50%;
-            position: absolute;
-            width: 280px;
-            height: 280px;
-        }
-
-        .heart-box::before { top: -140px; left: 0; }
-        .heart-box::after { left: 140px; top: 0; }
-
-        .heart-content {
-            transform: rotate(45deg);
-            position: absolute;
-            z-index: 5;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .heart-content h2 { margin: 0; font-size: 26px; }
-        .heart-content p { font-size: 14px; margin: 5px 0 15px 0; opacity: 0.8; }
-
-        .pass-input {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid var(--border-color);
-            padding: 10px 15px;
-            border-radius: 15px;
-            color: white;
-            text-align: center;
-            font-size: 16px;
-            outline: none;
-            width: 180px;
-            backdrop-filter: blur(5px);
-        }
-
-        .unlock-btn {
-            background: #4a0717;
-            color: white;
-            border: none;
-            padding: 12px 40px;
-            border-radius: 15px;
-            margin-top: 25px;
-            font-size: 18px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: 0.3s;
-        }
-
-        #main-site {
-            display: none;
-            width: 100%;
-            max-width: 450px;
-            padding: 20px;
-            box-sizing: border-box;
-            text-align: center;
-            padding-bottom: 120px;
-        }
-
-        .main-title { font-size: 32px; margin-bottom: 5px; }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .counter-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .counter-item {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            border-radius: 12px;
-        }
-
-        .counter-item span { display: block; font-size: 24px; font-weight: bold; }
-        .counter-item label { font-size: 12px; opacity: 0.7; }
-
-        .memory-img {
-            width: 100%;
-            border-radius: 15px;
-            margin-top: 15px;
-        }
-
-        .music-player {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background: rgba(40, 5, 12, 0.85);
-            border: 1px solid var(--border-color);
-            border-radius: 30px;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            backdrop-filter: blur(10px);
-            z-index: 100;
-        }
-
-        .player-info { display: flex; align-items: center; gap: 10px; font-size: 14px;}
-        .player-info img { width: 40px; height: 40px; border-radius: 50%; animation: spin 4s linear infinite; }
+        /* المحتوى الرئيسي */
+        #main-site { display: none; max-width: 450px; margin: 0 auto; padding: 20px; padding-bottom: 150px; position: relative; z-index: 10; }
+        .header-title { text-align: center; margin-bottom: 30px; }
+        .cursive-text { font-family: 'Great Vibes', cursive; font-size: 48px; margin: 0; }
+        .line-deco { width: 150px; height: 3px; background: white; margin: 5px auto 10px auto; border-radius: 5px; position: relative; }
+        .line-deco::after { content: "💕"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #7c0a1f; padding: 0 5px; }
+        .section-title { text-align: center; font-size: 28px; font-weight: 800; margin: 20px 0; }
         
-        .play-btn {
-            background: white;
-            color: #4a0717;
-            border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        /* العداد */
+        .counter-grid { display: flex; justify-content: space-between; gap: 8px; margin: 15px 0; }
+        .counter-item { background: rgba(255, 255, 255, 0.15); padding: 15px 5px; border-radius: 15px; text-align: center; flex: 1; border: 1px solid rgba(255,255,255,0.2); }
+        .counter-item span { display: block; font-size: 22px; font-weight: 800; }
+        .counter-item label { font-size: 12px; opacity: 0.9; }
 
+        /* منطقة الصفحات والذكريات */
+        .memory-zone { text-align: center; margin-top: 20px; transition: all 0.5s ease-in-out; }
+        .date-badge { background: #500512; padding: 8px 20px; border-radius: 20px; display: inline-block; margin-bottom: 15px; font-size: 14px; border: 1px solid rgba(255,255,255,0.2); }
+        
+        .img-card { position: relative; width: 100%; border-radius: 20px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+        .img-card img { width: 100%; display: block; }
+        .img-label { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.3); padding: 5px 25px; border-radius: 20px; backdrop-filter: blur(5px); font-weight: bold; font-size: 14px; }
+        .text-messages { text-align: right; line-height: 2.2; font-size: 18px; font-weight: bold; min-height: 120px; }
+
+        .action-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 12px 35px; border-radius: 20px; font-weight: bold; display: block; margin: 20px auto; cursor: pointer; transition: 0.2s; font-size: 16px; }
+        .action-btn:active { transform: scale(0.95); background: rgba(255,255,255,0.3); }
+
+        /* مشغل الموسيقى الاحترافي */
+        .music-player { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(50, 4, 12, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 30px; padding: 15px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 100; display: none; flex-direction: column; gap: 10px; }
+        .player-top { display: flex; justify-content: space-between; align-items: center; }
+        .eq-section { display: flex; align-items: center; gap: 8px; font-size: 12px; opacity: 0.8; }
+        .bars { display: flex; gap: 2px; height: 15px; align-items: flex-end; }
+        .bar { width: 3px; background: #ff4d6d; animation: eq 1s ease-in-out infinite alternate; }
+        .bar:nth-child(2) { animation-delay: 0.2s; } .bar:nth-child(3) { animation-delay: 0.4s; } .bar:nth-child(4) { animation-delay: 0.1s; }
+        @keyframes eq { 0% { height: 3px; } 100% { height: 15px; } }
+        .song-title { font-weight: bold; font-size: 16px; text-align: center; flex: 1; }
+        .player-controls { display: flex; align-items: center; gap: 15px; }
+        .ctrl-btn { background: rgba(255,255,255,0.1); border: none; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 14px; }
+        .play-btn { background: #960c22; font-size: 16px; }
+        .album-art { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; animation: spin 5s linear infinite; border: 2px solid rgba(255,255,255,0.3); }
+        .album-art.paused { animation-play-state: paused; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        .error { color: #ff8ca3; font-size: 14px; margin-top: 10px; display: none; }
-        
-        /* إخفاء مشغل يوتيوب تماماً خلف الكواليس */
-        #youtube-frame {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            opacity: 0;
-            pointer-events: none;
-        }
+        .progress-container { width: 100%; display: flex; align-items: center; gap: 10px; font-size: 11px; opacity: 0.8; }
+        .progress-bar { flex: 1; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; position: relative; overflow: hidden; }
+        .progress-fill { position: absolute; left: 0; top: 0; height: 100%; background: #ff4d6d; width: 0%; }
     </style>
-    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
+    <div class="floating-hearts-container" id="hearts-bg"></div>
+
     <div id="lock-screen">
-        <img class="avatar" src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/refs/heads/main/IMG_7882.jpeg" alt="avatar">
-        <div class="heart-box">
-            <div class="heart-content">
+        <div class="lock-container">
+            <img class="avatar-top" src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/refs/heads/main/IMG_7882.jpeg" alt="avatar">
+            <div class="heart-bg">
                 <h2>جاهزهـ😉</h2>
-                <p>فكري & مريم</p>
-                <input type="password" id="mySecretPass" class="pass-input" placeholder="Password">
-                <div id="error-txt" class="error">كلمة المرور خاطئة! ❌</div>
+                <p>❤ my everything</p>
+                <input type="password" id="pass" class="pass-input" placeholder="Password">
+                <button class="unlock-btn" onclick="unlockSite()">💕 Unlock 💕</button>
             </div>
         </div>
-        <button class="unlock-btn" onclick="unlockSite()">💕 Unlock 💕</button>
     </div>
 
     <div id="main-site">
-        <h1 class="main-title">فكري & مريم 💞</h1>
-        
-        <div class="card">
-            <div style="font-size: 14px; margin-bottom: 10px;">✨ بقالنا سوا من 04-09-2025 ✨</div>
-            <div class="counter-grid">
-                <div class="counter-item"><span id="days">0</span><label>يوم</label></div>
-                <div class="counter-item"><span id="hours">0</span><label>ساعة</label></div>
-                <div class="counter-item"><span id="mins">0</span><label>دقيقة</label></div>
-                <div class="counter-item"><span id="secs">0</span><label>ثانية</label></div>
-            </div>
-            <p style="font-size: 14px; margin-top: 15px; margin-bottom: 0;">كل ثانية بتعدي وانتِ في قلبي ❤️</p>
+        <div class="header-title">
+            <h1 class="cursive-text">lovelyy</h1>
+            <div class="line-deco"></div>
+            <div style="font-weight: bold;">بحبك 💕</div>
         </div>
 
-        <div class="card">
-            <p style="font-size: 18px; font-weight: bold; margin: 0;">❤️ أول مرة شفتك فيها</p>
-            <div style="background: rgba(0,0,0,0.2); padding: 5px 15px; display: inline-block; border-radius: 10px; margin: 10px 0; font-size: 12px;">2025-09-21 📅</div>
-            
-            <p style="font-size: 16px; opacity: 0.95; line-height: 1.6;">
-                بحبك يمريم ي اغلي من عمري ربنا يخليكي ليا يروحي وميحرمنيش منك ابدا ينور عيني🫂♥️
-            </p>
-            
-            <img class="memory-img" src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/refs/heads/main/F2BCD207-D6DD-4B3F-887D-3F670C2628A3.jpeg" alt="أول مقابلة">
+        <h2 class="section-title">بدايتنا 💖</h2>
+        
+        <div class="glass-box" style="text-align: center; margin-bottom: 25px;">
+            <div style="font-weight: bold; margin-bottom: 10px;">✨ سوا من 03-10-2024 ✨</div>
+            <div class="counter-grid">
+                <div class="counter-item"><span id="secs">0</span><label>ثانية</label></div>
+                <div class="counter-item"><span id="mins">0</span><label>دقيقة</label></div>
+                <div class="counter-item"><span id="hours">0</span><label>ساعة</label></div>
+                <div class="counter-item"><span id="days">0</span><label>يوم</label></div>
+            </div>
         </div>
+
+        <div class="memory-zone">
+            <div class="glass-box" id="page-title" style="display: inline-block; padding: 10px 30px; font-weight: bold; font-size: 18px;">
+                يوم ما قولتلك بحبك ❤️
+            </div>
+            <br>
+            <div class="date-badge" id="page-date">2024-10-03 📅</div>
+
+            <div class="img-card">
+                <img id="page-img" src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/refs/heads/main/F2BCD207-D6DD-4B3F-887D-3F670C2628A3.jpeg" alt="Memory">
+                <div class="img-label" id="page-label">بحبك 💕</div>
+            </div>
+
+            <div class="glass-box text-messages" id="page-text">
+                بحبك اوي<br><br>حقك عليا لو زعلتك 😘<br><br>ربنا يخليكي ليا
+            </div>
+        </div>
+
+        <button class="action-btn" onclick="nextPage()">memories 🔄</button>
+        
+        <div style="text-align: center; font-weight: bold; font-size: 20px; margin-bottom: 20px;">💕 Lovely 💕</div>
     </div>
 
-    <div class="music-player" id="custom-player" style="display: none;">
-        <div class="player-info">
-            <img src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/refs/heads/main/IMG_7882.jpeg" alt="album-art">
-            <div>
-                <div style="font-weight: bold;">وانا جنب حبيبي 😍</div>
-                <div style="font-size: 11px; opacity: 0.7;">عمرو دياب (Youtube Stream)</div>
+    <div class="music-player" id="custom-player">
+        <div class="player-top">
+            <div class="eq-section">
+                <div class="bars" id="eq-bars">
+                    <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                </div>
+                <span id="track-number">1 / 3</span>
+            </div>
+            <div class="song-title">وانت معايا 😍</div>
+            <div class="player-controls">
+                <button class="ctrl-btn" onclick="prevPage()"><i class="fa-solid fa-backward-step"></i></button>
+                <button class="ctrl-btn play-btn" onclick="toggleAudio()" id="play-pause-btn"><i class="fa-solid fa-pause"></i></button>
+                <button class="ctrl-btn" onclick="nextPage()"><i class="fa-solid fa-forward-step"></i></button>
+                <img src="https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/refs/heads/main/IMG_7882.jpeg" class="album-art" id="spin-art" alt="art">
             </div>
         </div>
-        <div id="youtube-frame"></div>
-        <button class="play-btn" onclick="toggleMusic()" id="play-icon">▶</button>
+        <div class="progress-container">
+            <span id="current-time">0:00</span>
+            <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+            <span id="duration-time">3:40</span>
+        </div>
+        
+        <audio id="bg-audio" loop>
+            <source src="music.mp3.mp3" type="audio/mpeg">
+        </audio>
     </div>
 
     <script>
-        let player;
-        let isPlaying = false;
+        // مصفوفة الصفحات المتقلبة
+        const pages = [
+            {
+                title: "يوم ما قولتلك بحبك ❤️",
+                date: "2024-10-03 📅",
+                img: "https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/refs/heads/main/F2BCD207-D6DD-4B3F-887D-3F670C2628A3.jpeg",
+                label: "بحبك 💕",
+                text: "بحبك اوي<br><br>حقك عليا لو زعلتك 😘<br><br>ربنا يخليكي ليا وعمرنا ما نفترق ابداً ينور عيني."
+            },
+            {
+                title: "أول مرة شفتك فيها الأغلى في عمري 😍",
+                date: "2025-09-21 📅",
+                img: "https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/refs/heads/main/IMG_7882.jpeg",
+                label: "أغلى من عمري 🫂",
+                text: "بحبك يمريم ي اغلي من عمري ربنا يخليكي ليا يروحي وميحرمنيش منك ابدا ينور عيني🫂♥️"
+            },
+            {
+                title: "كل يوم معاكي هو عيد وعمر جديد 🌟",
+                date: "الذكرى المستمرة 💖",
+                img: "https://raw.githubusercontent.com/56wrcjv67t-lgtm/love_site/refs/heads/main/F2BCD207-D6DD-4B3F-887D-3F670C2628A3.jpeg",
+                label: "روحي وعيني 👀",
+                text: "مفيش كلام يوصف مكانتك في قلبي، أنتِ الحاضر والمستقبل وكل حاجة حلوة في حياتي."
+            }
+        ];
 
-        // تجهيز مشغل يوتيوب بالأغنية الرسمية خلف الكواليس
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-frame', {
-                height: '1',
-                width: '1',
-                videoId: 'f9N2Dcc_4Yg', // المعرف الرسمي لأغنية وانا جنب حبيبي
-                playerVars: {
-                    'autoplay': 0,
-                    'loop': 1,
-                    'playlist': 'f9N2Dcc_4Yg'
-                },
-                events: {
-                    'onReady': onPlayerReady
-                }
-            });
-        }
+        let currentPage = 0;
 
-        function onPlayerReady(event) {
-            console.log("المشغل جاهز وآمن");
-        }
-
-        function unlockSite() {
-            const password = document.getElementById('mySecretPass').value.trim().toLowerCase();
+        function renderPage(index) {
+            const page = pages[index];
+            const zone = document.querySelector('.memory-zone');
+            zone.style.opacity = 0;
             
-            if(password === "love") {
-                document.getElementById('lock-screen').style.setProperty('display', 'none', 'important');
-                document.getElementById('main-site').style.setProperty('important', 'block', 'important');
+            setTimeout(() => {
+                document.getElementById('page-title').innerText = page.title;
+                document.getElementById('page-date').innerText = page.date;
+                document.getElementById('page-img').src = page.img;
+                document.getElementById('page-label').innerText = page.label;
+                document.getElementById('page-text').innerHTML = page.text;
+                document.getElementById('track-number').innerText = `${index + 1} / ${pages.length}`;
+                zone.style.opacity = 1;
+            }, 300);
+        }
+
+        function nextPage() { currentPage = (currentPage + 1) % pages.length; renderPage(currentPage); }
+        function prevPage() { currentPage = (currentPage - 1 + pages.length) % pages.length; renderPage(currentPage); }
+
+        // القلوب الطايرة
+        function createHearts() {
+            const container = document.getElementById('hearts-bg');
+            const emojis = ['❤️', '💖', '💕', '✨'];
+            for(let i=0; i<30; i++) {
+                let heart = document.createElement('div');
+                heart.className = 'heart-float';
+                heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                container.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        // فك القفل وتشغيل الأغنية من الملف المكرر
+        const audio = document.getElementById('bg-audio');
+        function unlockSite() {
+            const pass = document.getElementById('pass').value.trim().toLowerCase();
+            if(pass === "love") {
+                document.getElementById('lock-screen').style.display = 'none';
                 document.getElementById('main-site').style.display = 'block';
-                document.getElementById('custom-player').style.setProperty('display', 'flex', 'important');
+                document.getElementById('custom-player').style.display = 'flex';
                 
                 startCounter();
-                
-                // تشغيل تلقائي مدعوم بحركة فتح القفل
-                setTimeout(() => {
-                    if(player && typeof player.playVideo === 'function') {
-                        player.playVideo();
-                        document.getElementById('play-icon').innerText = "⏸";
-                        isPlaying = true;
-                    }
-                }, 300);
+
+                audio.play().then(() => {
+                    document.getElementById('play-pause-btn').innerHTML = '<i class="fa-solid fa-pause"></i>';
+                    document.getElementById('spin-art').classList.remove('paused');
+                }).catch(err => {
+                    console.log(err);
+                    alert("الموقع فتح! لو الأغنية مشتغلتش جرب تفتح من متصفح خفي (Incognito) عشان تحديث الكاش.");
+                });
             } else {
-                document.getElementById('error-txt').style.display = 'block';
+                alert("الباسورد غلط يا قمر 😉 (الكلمة هي love)");
             }
         }
 
+        // العداد الزمني
         function startCounter() {
-            const startDate = new Date("2025-09-04T00:00:00").getTime(); 
-
+            const startDate = new Date("2024-10-03T00:00:00").getTime(); 
             setInterval(function() {
                 const now = new Date().getTime();
                 const diff = now - startDate;
-                
                 document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-                document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById("mins").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                document.getElementById("secs").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+                document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById("mins").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById("secs").innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
             }, 1000);
         }
 
-        function toggleMusic() {
-            if (!player) return;
+        // التحكم في المشغل
+        function toggleAudio() {
+            const btn = document.getElementById('play-pause-btn');
+            const art = document.getElementById('spin-art');
+            const bars = document.getElementById('eq-bars');
             
-            if (!isPlaying) {
-                player.playVideo();
-                document.getElementById('play-icon').innerText = "⏸";
-                isPlaying = true;
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                art.classList.remove('paused');
+                bars.style.opacity = '1';
             } else {
-                player.pauseVideo();
-                document.getElementById('play-icon').innerText = "▶";
-                isPlaying = false;
+                audio.pause();
+                btn.innerHTML = '<i class="fa-solid fa-play"></i>';
+                art.classList.add('paused');
+                bars.style.opacity = '0.3';
             }
         }
+
+        audio.addEventListener('timeupdate', () => {
+            if(audio.duration) {
+                const progressPercent = (audio.currentTime / audio.duration) * 100;
+                document.getElementById('prog-fill').style.width = progressPercent + '%';
+                
+                let currentMins = Math.floor(audio.currentTime / 60);
+                let currentSecs = Math.floor(audio.currentTime % 60);
+                if(currentSecs < 10) currentSecs = '0' + currentSecs;
+                document.getElementById('current-time').innerText = currentMins + ':' + currentSecs;
+
+                let durationMins = Math.floor(audio.duration / 60);
+                let durationSecs = Math.floor(audio.duration % 60);
+                if(durationSecs < 10) durationSecs = '0' + durationSecs;
+                document.getElementById('duration-time').innerText = durationMins + ':' + durationSecs;
+            }
+        });
     </script>
 </body>
 </html>
